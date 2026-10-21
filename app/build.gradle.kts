@@ -5,11 +5,17 @@ plugins {
     // AGP 9 has built-in Kotlin support; do not apply org.jetbrains.kotlin.android.
 }
 
-val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-if (keystorePropertiesFile.exists()) {
-    keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
+// Release signing resolves from the environment first (CI: KEYSTORE_FILE,
+// KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD), then from an untracked local
+// keystore.properties. With neither present the release APK stays unsigned
+// (e.g. PR dry builds).
+val keystoreProperties = Properties().apply {
+    val file = rootProject.file("keystore.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
 }
+
+fun signingValue(envName: String, propName: String): String? =
+    System.getenv(envName)?.takeIf { it.isNotBlank() } ?: keystoreProperties.getProperty(propName)
 
 android {
     namespace = "io.github.unconditional.atvapplist"
@@ -25,11 +31,13 @@ android {
 
     signingConfigs {
         create("release") {
-            if (keystoreProperties.isNotEmpty()) {
-                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
-                storePassword = keystoreProperties.getProperty("storePassword")
-                keyAlias = keystoreProperties.getProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
+            val file = signingValue("KEYSTORE_FILE", "storeFile")
+            val storePassword = signingValue("KEYSTORE_PASSWORD", "storePassword")
+            if (file != null && storePassword != null) {
+                storeFile = rootProject.file(file)
+                storePassword = storePassword
+                keyAlias = signingValue("KEY_ALIAS", "keyAlias")
+                keyPassword = signingValue("KEY_PASSWORD", "keyPassword")
             }
         }
     }
@@ -39,7 +47,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+            if (signingConfigs.getByName("release").storeFile != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 

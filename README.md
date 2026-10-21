@@ -38,14 +38,15 @@ https://github.com/unconditional/atv-app-list/releases/latest/download/atv-app-l
 ## Building
 
 CI (GitHub Actions) builds `:app:assembleRelease` on every push to `main` and
-publishes a rolling `latest` prerelease; pushing a tag `v1.2.3` publishes a
+publishes a rolling `latest` release; pushing a tag `v1.2.3` publishes a
 versioned release.
 
 Toolchain: AGP 9.1.1 / Gradle 9.3.1 / Kotlin 2.4.20 (built into AGP) / JDK 17 / compileSdk 35.
 
 - Launcher icons and banners are pre-generated PNG/vector resources checked into `app/src/main/res/`.
-- `app/keystore.jks` + `keystore.properties` hold the release signing key
-  (committed intentionally so CI produces a consistent signature).
+- CI provides release signing credentials via repository secrets; local
+  builds use an untracked `keystore.properties`. Without them, APKs build
+  unsigned.
 
 ## Project layout
 
