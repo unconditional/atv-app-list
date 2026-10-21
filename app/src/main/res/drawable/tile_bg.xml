@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <inset
+            android:insetLeft="8dp"
+            android:insetTop="4dp"
+            android:insetRight="8dp"
+            android:insetBottom="4dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="20dp" />
+                <solid android:color="@color/tile_focused" />
+                <stroke
+                    android:width="3dp"
+                    android:color="@color/accent" />
+            </shape>
+        </inset>
+    </item>
+    <item>
+        <inset
+            android:insetLeft="8dp"
+            android:insetTop="4dp"
+            android:insetRight="8dp"
+            android:insetBottom="4dp">
+            <shape android:shape="rectangle">
+                <corners android:radius="20dp" />
+                <solid android:color="@color/tile_default" />
+            </shape>
+        </inset>
+    </item>
+</selector>

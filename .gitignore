@@ -1,0 +1,16 @@
+# Android / Gradle
+.gradle/
+build/
+local.properties
+captures/
+*.iml
+.idea/
+
+# Local helper workspace (not part of the app)
+opencode.json
+examples/
+
+# OS noise
+.DS_Store
+Thumbs.db
+*.class

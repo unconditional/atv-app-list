@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Safe area margins for 1080p Google TV screens -->
+    <dimen name="screen_padding">48dp</dimen>
+    <dimen name="header_top">24dp</dimen>
+    <dimen name="header_bottom">14dp</dimen>
+    <dimen name="grid_bottom">32dp</dimen>
+
+    <!-- Tiles -->
+    <dimen name="tile_min_width">200dp</dimen>
+    <dimen name="row_gap">10dp</dimen>
+    <dimen name="tile_padding">16dp</dimen>
+    <dimen name="tile_icon_size">88dp</dimen>
+    <dimen name="tile_label_top">10dp</dimen>
+</resources>

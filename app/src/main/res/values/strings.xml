@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ATV App List</string>
+
+    <!-- Header chips -->
+    <string name="sort_name">A-Z</string>
+    <string name="sort_last_used">Last used</string>
+    <string name="sort_installed">Newest</string>
+    <string name="chip_actions">Actions</string>
+    <string name="chip_settings">Settings</string>
+
+    <!-- Grid -->
+    <string name="app_count">%d apps</string>
+    <string name="empty_apps">No launchable apps found</string>
+    <string name="never_used">never used</string>
+
+    <!-- Per-app actions -->
+    <string name="action_launch">Launch</string>
+    <string name="action_force_stop">Force stop</string>
+    <string name="action_app_info">App info</string>
+    <string name="action_uninstall">Uninstall</string>
+    <string name="action_hide">Hide from list</string>
+    <string name="action_unhide">Show in list</string>
+    <string name="action_unhide_all">Unhide all</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="force_stop_hint">Choose Force stop inside the app info screen</string>
+    <string name="launch_failed">Could not launch this app</string>
+    <string name="open_failed">Could not open system settings</string>
+    <string name="uninstall_failed">Could not open the uninstaller for this app</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_show_system">Show system apps</string>
+    <string name="settings_hidden">Hidden apps</string>
+    <string name="hidden_count" formatted="false">%d hidden</string>
+    <string name="none_hidden">No hidden apps</string>
+    <string name="settings_usage_access">Usage access</string>
+    <string name="usage_access_open">Open permission screen</string>
+    <string name="usage_access_granted">Granted</string>
+    <string name="settings_about">About</string>
+    <string name="about_body">Version %1$s\n\nShows every launchable app installed on this TV, including sideloaded ones.\n\nOK launches an app. Long-press OK (or use the Actions chip) for more.\n\nSorting by Last used becomes more accurate when Usage access is granted.</string>
+
+    <string name="on">On</string>
+    <string name="off">Off</string>
+</resources>
