@@ -18,6 +18,9 @@ internal class Prefs(context: Context) {
             SortMode.valueOf(raw)
         } catch (e: IllegalArgumentException) {
             SortMode.NAME
+        } catch (e: ClassCastException) {
+            // corrupted entry: reset instead of crashing every launch
+            SortMode.NAME
         }
         set(value) {
             prefs.edit().putString(KEY_SORT_MODE, value.name).apply()

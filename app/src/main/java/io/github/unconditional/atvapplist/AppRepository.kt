@@ -6,13 +6,25 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.LruCache
 
 internal class AppRepository(private val context: Context) {
 
     private val packageManager: PackageManager = context.packageManager
-    private val iconCache = LruCache<String, Drawable>(192)
+
+    /**
+     * Icons are cached under a byte budget, not an entry count: sideloaded
+     * apps can carry very large launcher bitmaps and must not balloon the
+     * heap on low-RAM TV devices.
+     */
+    private val iconCache = object : LruCache<String, Drawable>(ICON_CACHE_MAX_BYTES) {
+        override fun sizeOf(key: String, value: Drawable): Int {
+            val bitmap = (value as? BitmapDrawable)?.bitmap
+            return bitmap?.byteCount ?: ICON_CACHE_FALLBACK_ENTRY_BYTES
+        }
+    }
 
     /**
      * Lists every visible launchable app. An app is launchable when it exposes a
@@ -102,5 +114,13 @@ internal class AppRepository(private val context: Context) {
             iconCache.put(pkg, drawable)
         }
         return drawable
+    }
+
+    companion object {
+        /** 16 MiB budget shared by all launcher icons. */
+        private const val ICON_CACHE_MAX_BYTES = 16 * 1024 * 1024
+
+        /** Assumed cost of drawables whose size cannot be measured (vectors, etc.). */
+        private const val ICON_CACHE_FALLBACK_ENTRY_BYTES = 16 * 1024
     }
 }

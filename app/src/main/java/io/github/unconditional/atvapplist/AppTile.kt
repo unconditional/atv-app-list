@@ -58,7 +58,7 @@ internal class AppTile @JvmOverloads constructor(
         labelView.textSize = 15f
         labelView.setTextColor(UiCompat.colorStateList(context, R.color.tile_label))
         labelView.isDuplicateParentStateEnabled = true
-        labelView.maxLines = 1
+        labelView.maxLines = 2
         labelView.ellipsize = TextUtils.TruncateAt.END
         addView(labelView)
 
@@ -74,6 +74,7 @@ internal class AppTile @JvmOverloads constructor(
     }
 
     fun bind(app: AppEntry, meta: CharSequence?) {
+        longPressFired = false // recycled tile must not inherit dialog-time state
         entry = app
         iconView.setImageDrawable(app.icon)
         labelView.text = AppSorts.displayName(app)
@@ -91,6 +92,16 @@ internal class AppTile @JvmOverloads constructor(
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect)
         val scale = if (gainFocus) 1.05f else 1.0f
         animate().scaleX(scale).scaleY(scale).setDuration(120L).start()
+    }
+
+    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        super.onWindowFocusChanged(hasWindowFocus)
+        if (!hasWindowFocus) {
+            // The actions dialog took over input, so this tile never sees the
+            // long press's key-up; clear the flag or the next OK press on this
+            // tile would be swallowed.
+            longPressFired = false
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

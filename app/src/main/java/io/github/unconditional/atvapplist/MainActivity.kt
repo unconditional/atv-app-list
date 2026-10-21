@@ -32,6 +32,7 @@ internal class MainActivity : Activity(), AppGrid.Listener {
     private var allApps: List<AppEntry> = emptyList()
     private var focusedEntry: AppEntry? = null
     private var pendingFocusPackage: String? = null
+    @Volatile
     private var destroyed = false
 
     private val executor = Executors.newSingleThreadExecutor()
@@ -81,8 +82,8 @@ internal class MainActivity : Activity(), AppGrid.Listener {
     override fun onStop() {
         try {
             unregisterReceiver(packageChangeReceiver)
-        } catch (e: Exception) {
-            // not registered
+        } catch (e: IllegalArgumentException) {
+            // not registered (onStart never ran)
         }
         super.onStop()
     }
@@ -189,13 +190,14 @@ internal class MainActivity : Activity(), AppGrid.Listener {
 
     private fun launch(entry: AppEntry) {
         try {
-            usageStore.record(entry.packageName)
             val intent = Intent(Intent.ACTION_MAIN).apply {
                 component = entry.componentName
                 addCategory(Intent.CATEGORY_LAUNCHER)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             startActivity(intent)
+            // Only a launch that actually started counts as "used".
+            usageStore.record(entry.packageName)
         } catch (e: Exception) {
             Toast.makeText(this, R.string.launch_failed, Toast.LENGTH_SHORT).show()
         }

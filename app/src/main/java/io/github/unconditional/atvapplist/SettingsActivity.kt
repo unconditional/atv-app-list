@@ -61,9 +61,8 @@ internal class SettingsActivity : Activity() {
             getString(R.string.settings_usage_access),
             usageAccessText()
         ) { _ ->
-            if (!usageStore.isUsageAccessGranted()) {
-                openUsageAccessSettings()
-            }
+            // Always route to the system screen: also works for revoking.
+            openUsageAccessSettings()
         }
 
         addRow(

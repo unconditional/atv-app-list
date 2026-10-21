@@ -30,6 +30,9 @@ internal class AppGrid @JvmOverloads constructor(
     private val activeTiles = ArrayList<AppTile>()
     private var lastIndex = -1
 
+    /** Columns the last rebuild laid out; drives re-flow when the width changes. */
+    private var builtColumns = 0
+
     private var entries: List<AppEntry> = emptyList()
     private var metaProvider: ((AppEntry) -> CharSequence?)? = null
 
@@ -70,12 +73,13 @@ internal class AppGrid @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         // Late first layout (list loaded before the first layout pass): re-fill columns.
-        if (w > 0 && w != oldw && entries.isNotEmpty() && activeTiles.size != entries.size) {
+        if (w > 0 && w != oldw && entries.isNotEmpty() && builtColumns != columnCount(w)) {
             rebuild()
         }
     }
 
     private fun rebuild() {
+        builtColumns = columnCount(width)
         pool.addAll(activeTiles)
         activeTiles.clear()
         lastIndex = -1
