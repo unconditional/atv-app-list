@@ -2,6 +2,8 @@ package io.github.unconditional.atvapplist
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ScrollView
 
@@ -37,7 +39,7 @@ internal class AppGrid @JvmOverloads constructor(
         content.orientation = LinearLayout.VERTICAL
         addView(
             content,
-            ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.WRAP_CONTENT)
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         )
         isVerticalScrollBarEnabled = false
         clipToPadding = false
