@@ -12,6 +12,12 @@ captures/
 # Local-only tooling (asset generator, not part of the app)
 tools/
 
+# Local signing material (CI signs via GitHub Actions secrets)
+keystore.properties
+keystore/
+*.jks
+*.keystore
+
 # OS noise
 .DS_Store
 Thumbs.db
