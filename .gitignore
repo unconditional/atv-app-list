@@ -6,12 +6,12 @@ captures/
 *.iml
 .idea/
 
-# Local helper workspace (not part of the app)
-opencode.json
-examples/
-session-dump-*.md
+# Generated build artifacts
+*.class
+
+# Local-only tooling (asset generator, not part of the app)
+tools/
 
 # OS noise
 .DS_Store
 Thumbs.db
-*.class
