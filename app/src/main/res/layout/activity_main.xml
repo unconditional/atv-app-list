@@ -63,11 +63,6 @@
                     android:text="@string/sort_installed" />
 
                 <TextView
-                    android:id="@+id/chip_actions"
-                    style="@style/Chip"
-                    android:text="@string/chip_actions" />
-
-                <TextView
                     android:id="@+id/chip_settings"
                     style="@style/Chip"
                     android:text="@string/chip_settings" />

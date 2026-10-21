@@ -6,7 +6,6 @@
     <string name="sort_name">A-Z</string>
     <string name="sort_last_used">Last used</string>
     <string name="sort_installed">Newest</string>
-    <string name="chip_actions">Actions</string>
     <string name="chip_settings">Settings</string>
 
     <!-- Grid -->
@@ -38,7 +37,7 @@
     <string name="usage_access_open">Open permission screen</string>
     <string name="usage_access_granted">Granted</string>
     <string name="settings_about">About</string>
-    <string name="about_body">Version %1$s\n\nShows every launchable app installed on this TV, including sideloaded ones.\n\nOK launches an app. Long-press OK (or use the Actions chip) for more.\n\nSorting by Last used becomes more accurate when Usage access is granted.</string>
+    <string name="about_body">Version %1$s\n\nShows every launchable app installed on this TV, including sideloaded ones.\n\nOK launches an app. Long-press OK for more actions.\n\nSorting by Last used becomes more accurate when Usage access is granted.</string>
 
     <string name="on">On</string>
     <string name="off">Off</string>

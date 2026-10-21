@@ -119,7 +119,6 @@ internal class MainActivity : Activity(), AppGrid.Listener {
         findViewById<TextView>(R.id.chip_alpha)?.setOnClickListener { setSortMode(SortMode.NAME) }
         findViewById<TextView>(R.id.chip_last_used)?.setOnClickListener { setSortMode(SortMode.LAST_USED) }
         findViewById<TextView>(R.id.chip_installed)?.setOnClickListener { setSortMode(SortMode.INSTALLED) }
-        findViewById<TextView>(R.id.chip_actions)?.setOnClickListener { showFocusedAppActions() }
         findViewById<TextView>(R.id.chip_settings)?.setOnClickListener { openSettings() }
         updateChipStates()
     }
@@ -135,12 +134,6 @@ internal class MainActivity : Activity(), AppGrid.Listener {
         prefs.sortMode = mode
         updateChipStates()
         refreshGrid()
-    }
-
-    private fun showFocusedAppActions() {
-        val index = if (grid.focusedIndex() >= 0) grid.focusedIndex() else 0
-        val entry = grid.tileAt(index)?.entry ?: return
-        showActionsDialog(entry)
     }
 
     private fun openSettings() {

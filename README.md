@@ -24,8 +24,7 @@ https://github.com/unconditional/atv-app-list/releases/latest/download/atv-app-l
 - Grid of all launchable apps (TV-style and phone-style packages)
 - Sort: `A-Z`, `Last used` (self-tracked, optionally merged with system usage
   statistics when you grant *Usage access*), `Newest` (recently installed)
-- `OK` launches; **long-press OK** (or the `Actions` chip while a tile is
-  highlighted) opens: Launch / Force stop / App info / Uninstall / Hide
+- `OK` launches; **long-press OK** opens: Launch / Force stop / App info / Uninstall / Hide
 - Settings: show system apps, manage hidden apps, request Usage access, About
 - No INTERNET permission; nothing leaves the device
 
@@ -42,10 +41,9 @@ CI (GitHub Actions) builds `:app:assembleRelease` on every push to `main` and
 publishes a rolling `latest` prerelease; pushing a tag `v1.2.3` publishes a
 versioned release.
 
-Toolchain: AGP 9.1.1 / Gradle 9.3.1 / Kotlin 2.4.20 / JDK 17 / compileSdk 35.
+Toolchain: AGP 9.1.1 / Gradle 9.3.1 / Kotlin 2.4.20 (built into AGP) / JDK 17 / compileSdk 35.
 
-- `tools/gen/Gen.java` regenerates launcher icons + banners (plain Java 2D,
-  run from the repo root: `java -cp tools/gen Gen`).
+- Launcher icons and banners are pre-generated PNG/vector resources checked into `app/src/main/res/`.
 - `app/keystore.jks` + `keystore.properties` hold the release signing key
   (committed intentionally so CI produces a consistent signature).
 
@@ -55,5 +53,4 @@ Toolchain: AGP 9.1.1 / Gradle 9.3.1 / Kotlin 2.4.20 / JDK 17 / compileSdk 35.
 app/src/main/java/...   Kotlin sources (activities, grid/tile views, repository)
 app/src/main/res/       layouts, drawables, launcher icons (mipmap), banner
 .github/workflows/      CI: build + artifact + releases
-tools/gen/              optional asset generator
 ```
