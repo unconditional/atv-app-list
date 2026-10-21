@@ -9,6 +9,7 @@ captures/
 # Local helper workspace (not part of the app)
 opencode.json
 examples/
+session-dump-*.md
 
 # OS noise
 .DS_Store
