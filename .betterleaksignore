@@ -1,4 +1,0 @@
-# Local-only, gitignored release-signing configuration lives in this file by
-# design (storeFile/storePassword/keyAlias/keyPassword). It is never committed.
-keystore.properties:generic-password:2
-keystore.properties:generic-password:4

@@ -18,6 +18,9 @@ keystore/
 *.jks
 *.keystore
 
+# Local secret-scan ignore list (not shared)
+.betterleaksignore
+
 # OS noise
 .DS_Store
 Thumbs.db
