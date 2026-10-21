@@ -78,7 +78,6 @@ jobs:
             --title "latest (auto-build)" \
             --notes "Automatic build of commit ${GITHUB_SHA}.
           Direct download: https://github.com/unconditional/atv-app-list/releases/latest/download/atv-app-list.apk" \
-            --prerelease \
             --target main
 
       - name: Create tag release
