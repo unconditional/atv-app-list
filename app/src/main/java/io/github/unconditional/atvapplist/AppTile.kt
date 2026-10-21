@@ -13,9 +13,10 @@ import android.text.TextUtils
 /**
  * One grid tile: icon + name + optional meta line (e.g. "2 h ago").
  *
- * Tap/click and OK launch the app. Holding OK (or long touch) triggers the
- * actions dialog; OK long-press is detected via key repeats because plain
- * hardware-key long presses do not call performLongClick on every remote.
+ * A short OK press or tap launches the app; holding OK (or a long touch)
+ * triggers the actions dialog. Long press is detected both through the
+ * framework timeout and via key repeats, because hardware-key long presses do
+ * not call performLongClick on every remote.
  */
 internal class AppTile @JvmOverloads constructor(
     context: Context,
@@ -106,9 +107,7 @@ internal class AppTile @JvmOverloads constructor(
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (isConfirmKey(keyCode) && event.repeatCount >= LONG_PRESS_REPEATS && !longPressFired) {
-            longPressFired = true
-            isPressed = false
-            onLongPressAction?.invoke(this)
+            fireLongPress()
             return true
         }
         return super.onKeyDown(keyCode, event)
@@ -121,6 +120,28 @@ internal class AppTile @JvmOverloads constructor(
             return true
         }
         return super.onKeyUp(keyCode, event)
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        // Short OK press (framework reaches this from onKeyUp) or touch tap.
+        onClickAction?.invoke(this)
+        return true
+    }
+
+    override fun performLongClick(): Boolean {
+        // Framework long-press timeout (touch, or remotes whose OK fires
+        // performLongClick before key repeats reach the threshold above).
+        if (!longPressFired) {
+            fireLongPress()
+        }
+        return true
+    }
+
+    private fun fireLongPress() {
+        longPressFired = true
+        isPressed = false
+        onLongPressAction?.invoke(this)
     }
 
     private fun isConfirmKey(keyCode: Int): Boolean =
